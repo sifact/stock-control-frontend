@@ -5,6 +5,7 @@ import { toast } from "react-hot-toast";
 import upload from "../utils/upload";
 import { useUpdateProductMutation } from "../redux/api/apiSlice";
 import { useLocation } from "react-router-dom";
+import Header from "../components/Header";
 
 const UpdateProduct = () => {
   const location = useLocation();
