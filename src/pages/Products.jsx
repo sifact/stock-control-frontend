@@ -3,6 +3,7 @@ import React from "react";
 import {
   useDeleteProductMutation,
   useGetProductsQuery,
+  useMarkAsSoldMutation,
 } from "../redux/api/apiSlice";
 import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
@@ -26,9 +27,12 @@ const Products = () => {
           ? "loading..."
           : error
           ? "Something went wrong..."
-          : data.map((product, idx) => (
-              <Product key={product._id} product={product} />
-            ))}
+          : data.map(
+              (product, idx) =>
+                product.quantity > 0 && (
+                  <Product key={product._id} product={product} />
+                )
+            )}
       </div>
     </div>
   );
@@ -38,6 +42,7 @@ export default Products;
 
 const Product = ({ product }) => {
   const [deleteProduct, {}] = useDeleteProductMutation();
+  const [markSold, {}] = useMarkAsSoldMutation();
 
   const handleDelete = (id) => {
     console.log(id);
@@ -55,6 +60,19 @@ const Product = ({ product }) => {
           console.log(error.data);
         });
     }
+  };
+
+  const handleSold = (product) => {
+    markSold(product)
+      .unwrap()
+      .then(() => {
+        toast.success("Product is sold...");
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error.data);
+        console.log(error.data);
+      });
   };
   const { _id, img, title, category, costPrice, sellingPrice, quantity } =
     product;
@@ -80,7 +98,10 @@ const Product = ({ product }) => {
           <div className="space-y-3">
             <p> {quantity} pcs</p>
             <p>
-              <button className="px-2 py-1 border border-gray-800 rounded-bl-[15%] text-black rounded-sm ">
+              <button
+                className="px-2 py-1 border border-gray-800 rounded-bl-[15%] text-black rounded-sm "
+                onClick={() => handleSold(product)}
+              >
                 Mark Sold
               </button>
             </p>

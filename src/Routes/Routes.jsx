@@ -13,6 +13,7 @@ import Breakdown from "../pages/BreakDown";
 import Overview from "../pages/Overview";
 import Monthly from "../pages/Monthly";
 import Daily from "../pages/Daily";
+import SoldProducts from "../pages/SoldProducts";
 
 const router = createBrowserRouter([
   {
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
       {
         path: "/createProduct",
         element: <CreateProduct />,
+      },
+      {
+        path: "/soldProducts",
+        element: <SoldProducts />,
       },
       {
         path: "/createUser",

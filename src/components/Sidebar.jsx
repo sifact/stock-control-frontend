@@ -40,7 +40,7 @@ const Sidebar = () => {
               products
             </NavLink>
           </li>
-          <li className=" hover:text-gray-200 mb-6">
+          <li className=" hover:text-gray-200">
             <NavLink
               className={({ isActive, isPending }) =>
                 isPending
@@ -52,6 +52,20 @@ const Sidebar = () => {
               to="/createProduct"
             >
               Add product
+            </NavLink>
+          </li>
+          <li className=" hover:text-gray-200 mb-6">
+            <NavLink
+              className={({ isActive, isPending }) =>
+                isPending
+                  ? "pending w-full inline-block pl-12 py-[10px]"
+                  : isActive
+                  ? "active w-full inline-block pl-12"
+                  : "w-full inline-block pl-12 py-[10px]"
+              }
+              to="/soldProducts"
+            >
+              Sold products
             </NavLink>
           </li>
           <li className=" hover:text-gray-200">

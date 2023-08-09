@@ -2,7 +2,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://product-management-backend.vercel.app/api/",
+    // baseUrl: "https://product-management-backend.vercel.app/api/",
+    baseUrl: "http://localhost:8800/api/",
     credentials: "include",
   }),
   reducerPath: "adminApi",
@@ -47,9 +48,24 @@ export const api = createApi({
       invalidatesTags: ["Products"],
     }),
 
+    // sales
     getSales: build.query({
       query: () => "sales/",
       providesTags: ["Sales"],
+    }),
+
+    markAsSold: build.mutation({
+      query: (product) => ({
+        url: `sales/`,
+        method: "POST",
+        body: product,
+      }),
+      invalidatesTags: ["Products"],
+    }),
+
+    getSoldProducts: build.query({
+      query: () => "sales/sold",
+      providesTags: ["Products"],
     }),
   }),
 });
@@ -60,24 +76,6 @@ export const {
   useDeleteProductMutation,
   useUpdateProductMutation,
   useGetSalesQuery,
+  useMarkAsSoldMutation,
+  useGetSoldProductsQuery,
 } = api;
-
-// getFilterTerms: build.query({
-//   query: () => `book/`,
-//   providesTags: ["Filter"],
-// }),
-
-// getBook: build.query({
-//   query: (id) => `book/${id}`,
-//   providesTags: ["Book"],
-// }),
-
-// getBooks: build.query({
-//   query: ({ search, genre, year }) => ({
-//     url: `book/`,
-//     method: "GET",
-//     params: { search, genre, year },
-//   }),
-
-//   providesTags: ["Books"],
-// }),
