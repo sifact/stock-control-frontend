@@ -11,12 +11,13 @@ const OverviewChart = ({ isDashboard = false, view }) => {
     const { monthlyData } = data;
     const totalSalesLine = {
       id: "totalSales",
-      color: "hsl(154, 70%, 50%)",
+      // color: "hsl(154, 70%, 50%)",
       data: [],
     };
     const totalUnitsLine = {
       id: "totalUnits",
-      color: "hsl(355, 70%, 50%)",
+      // color: "hsl(355, 70%, 50%)",
+      color: "hsl(154, 70%, 50%)",
       data: [],
     };
 
@@ -58,7 +59,7 @@ const OverviewChart = ({ isDashboard = false, view }) => {
       },
       ticks: {
         line: {
-          stroke: "text-gray-200", // Use Tailwind CSS "text-gray-200" for stroke color
+          stroke: "text-gray-800", // Use Tailwind CSS "text-gray-200" for stroke color
           strokeWidth: 1,
         },
         text: {

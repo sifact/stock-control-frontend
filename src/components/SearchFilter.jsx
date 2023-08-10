@@ -5,12 +5,12 @@ import search from "../../public/search.png";
 const SearchFilter = ({ filters, setFilters }) => {
   const [open, setOpen] = useState(false);
   const [filter, setFilter] = useState("All");
-  const [category, setCategory] = useState("All");
 
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearch = () => {
     setFilters({ ...filters, category: "", search: searchTerm });
+    // setSearchTerm("");
   };
 
   const categories = ["Cakes", "Burgers", "Pizzas", "Oils", "Drinks", "All"];
@@ -20,7 +20,8 @@ const SearchFilter = ({ filters, setFilters }) => {
         <input
           className="outline-none border-none text-black"
           type="text"
-          placeholder="Search by genre, name"
+          placeholder="Search by name"
+          value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         <button onClick={handleSearch}>
@@ -41,12 +42,13 @@ const SearchFilter = ({ filters, setFilters }) => {
                     className="cursor-pointer"
                     onClick={() => {
                       setFilter(category);
-                      // setFilters({
-                      //   ...filters,
-                      //   search: "",
+                      setFilters({
+                        ...filters,
+                        search: "",
 
-                      //   category: category,
-                      // });
+                        category: category,
+                      });
+                      setSearchTerm("");
                       setOpen(!open);
                     }}
                     key={idx}

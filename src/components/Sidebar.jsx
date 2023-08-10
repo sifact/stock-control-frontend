@@ -158,7 +158,7 @@ const Sidebar = () => {
           )}
 
           <li
-            className="ml-12 hover:text-gray-200 absolute bottom-10"
+            className="ml-12 mt-12 hover:text-gray-200"
             onClick={handleLogout}
           >
             <button className="px-3 py-2 bg-white text-gray-950 rounded-sm ">

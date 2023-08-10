@@ -2,8 +2,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({
-    // baseUrl: "https://product-management-backend.vercel.app/api/",
-    baseUrl: "http://localhost:8800/api/",
+    baseUrl: "https://product-management-backend.vercel.app/api/",
+    // baseUrl: "http://localhost:8800/api/",
     credentials: "include",
   }),
   reducerPath: "adminApi",
@@ -12,9 +12,10 @@ export const api = createApi({
 
   endpoints: (build) => ({
     getProducts: build.query({
-      query: () => ({
+      query: ({ search, category }) => ({
         url: `products/`,
         method: "GET",
+        params: { search, category },
       }),
 
       providesTags: ["Products"],
@@ -51,7 +52,7 @@ export const api = createApi({
     // sales
     getSales: build.query({
       query: () => "sales/",
-      providesTags: ["Sales"],
+      providesTags: ["Products"],
     }),
 
     markAsSold: build.mutation({
@@ -67,6 +68,11 @@ export const api = createApi({
       query: () => "sales/sold",
       providesTags: ["Products"],
     }),
+
+    getCategories: build.query({
+      query: () => "category/",
+      providesTags: ["Products"],
+    }),
   }),
 });
 
@@ -78,4 +84,5 @@ export const {
   useGetSalesQuery,
   useMarkAsSoldMutation,
   useGetSoldProductsQuery,
+  useGetCategoriesQuery,
 } = api;

@@ -7,9 +7,12 @@ const UsersTable = ({ user, idx, refetch }) => {
 
   const handleDelete = async () => {
     try {
-      await newRequest.delete(`users/delete/${_id}`);
-      refetch();
-      toast.success("User deleted...");
+      const agree = window.confirm("Are you sure you wanna delete this User?");
+      if (agree) {
+        await newRequest.delete(`users/delete/${_id}`);
+        refetch();
+        toast.success("User deleted...");
+      }
     } catch (error) {
       console.log(error.response.data);
     }

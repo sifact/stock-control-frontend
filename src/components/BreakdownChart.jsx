@@ -1,43 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import { ResponsivePie } from "@nivo/pie";
-import { useGetSalesQuery } from "../redux/api/apiSlice";
+import { useGetCategoriesQuery } from "../redux/api/apiSlice";
 
 const BreakdownChart = ({ isDashboard = false }) => {
-  const { data, isLoading } = useGetSalesQuery();
+  const { data, isLoading } = useGetCategoriesQuery();
 
   if (!data || isLoading) return "Loading...";
 
-  const colors = ["green-100", "gray-800", "gray-300", "gray-600"];
   const categories = [
     {
       id: "drinks",
       label: "drinks",
       value: 3,
-      color: "colors",
     },
     {
       id: "cakes",
       label: "cakes",
       value: 3,
-      color: "colors",
     },
     {
       id: "burgers",
       label: "burgers",
       value: 3,
-      color: "colors",
     },
     {
       id: "pizzas",
       label: "pizzas",
       value: 3,
-      color: "colors",
     },
     {
       id: "oils",
       label: "oils",
       value: 3,
-      color: "colors",
     },
   ];
 
@@ -50,7 +44,8 @@ const BreakdownChart = ({ isDashboard = false }) => {
   //   })
   // );
 
-  const formattedData = categories.map((category) => category);
+  const formattedData = data.map((category) => category);
+  let calculatedTotal = 0;
 
   return (
     <div
@@ -186,7 +181,10 @@ const BreakdownChart = ({ isDashboard = false }) => {
         }}
       >
         <h1 className="text-sm">
-          {!isDashboard && "Total:"} ${data.yearlySalesTotal}
+          {data.forEach((category) => {
+            calculatedTotal += category.value;
+          })}
+          {!isDashboard && "Products:"} {calculatedTotal}
         </h1>
       </div>
     </div>

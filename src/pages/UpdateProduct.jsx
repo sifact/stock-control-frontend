@@ -68,9 +68,9 @@ const UpdateProduct = () => {
   };
 
   return (
-    <div className="flex gap-20 mb-6 w-full">
+    <div className="flex mb-6 w-full flex-col">
+      <Header title={"Update"} subtitle={"Update products in realtime"} />
       <div className="flex flex-col w-full items-center">
-        <Header title={"Update"} subtitle={"Update products in realtime"} />
         <form
           className="bg-white p-6 rounded-lg shadow-md w-full md:w-3/5 h-auto"
           onSubmit={handleSubmit}

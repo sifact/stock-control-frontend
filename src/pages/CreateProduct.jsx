@@ -5,11 +5,14 @@ import newRequest from "../utils/newRequest";
 import upload from "../utils/upload";
 import { useAddProductMutation } from "../redux/api/apiSlice";
 import Header from "../components/Header";
+import { useNavigate } from "react-router-dom";
 
 const CreateProduct = () => {
   const [file, setFile] = useState(null);
   const [category, setCategory] = useState("Category");
   const [addProduct, {}] = useAddProductMutation();
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,6 +40,7 @@ const CreateProduct = () => {
       .unwrap()
       .then(() => {
         toast.success("Product added...");
+        navigate("/dashboard");
       })
       .catch((error) => {
         toast.error("Something went wrong...");
@@ -101,14 +105,15 @@ const CreateProduct = () => {
             <div className="dropdown inline-block relative">
               <select
                 className="dropdown-button appearance-none border  py-2 px-3 pr-8 rounded leading-tight "
+                required
                 onChange={(e) => setCategory(e.target.value)}
               >
                 <option value="">Category</option>
                 <option value="Cakes">Cakes</option>
                 <option value="Drinks">Drinks</option>
-                <option value="Burger">Burger</option>
-                <option value="Pizza">Pizza</option>
-                <option value="Oil">Oil</option>
+                <option value="Burger">Burgers</option>
+                <option value="Pizzas">Pizzas</option>
+                <option value="Oils">Oils</option>
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-800">
                 <svg

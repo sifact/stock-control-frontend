@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import {
   useDeleteProductMutation,
@@ -11,28 +11,35 @@ import SearchFilter from "../components/SearchFilter";
 import Header from "../components/Header";
 
 const Products = () => {
-  const { data, isLoading, error } = useGetProductsQuery();
+  const [filters, setFilters] = useState({
+    category: "",
+    search: "",
+  });
+
+  const { search, category } = filters;
+
+  const { data, isLoading, error } = useGetProductsQuery({
+    ...(search && { search }),
+    ...(category && { category }),
+  });
 
   return (
     <div className="m-[1.5rem] ">
       <Header title={"Products"} subtitle={"All products at a glance"} />
       <div className="text-left w-full">
-        <SearchFilter />
+        <SearchFilter filters={filters} setFilters={setFilters} />
       </div>
       <div
         className="mb-32 mt-6 pr-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8
-      gap-y-12 container mx-auto"
+      gap-y-20 container mx-auto"
       >
         {isLoading
           ? "loading..."
           : error
           ? "Something went wrong..."
-          : data.map(
-              (product, idx) =>
-                product.quantity > 0 && (
-                  <Product key={product._id} product={product} />
-                )
-            )}
+          : data.map((product, idx) => (
+              <Product key={product._id} product={product} />
+            ))}
       </div>
     </div>
   );
@@ -45,14 +52,12 @@ const Product = ({ product }) => {
   const [markSold, {}] = useMarkAsSoldMutation();
 
   const handleDelete = (id) => {
-    console.log(id);
     const agree = window.confirm("Are you sure you wanna delete this Product?");
     if (agree) {
       deleteProduct(id)
         .unwrap()
         .then(() => {
           toast.success("Product is deleted...");
-          navigate("/products");
         })
         .catch((error) => {
           console.log(error);
@@ -78,28 +83,38 @@ const Product = ({ product }) => {
     product;
   return (
     <div className="relative space-y-6">
-      <div className="h-[300px]  bg-gradient-to-tr from-gray-900 to-green-50 rounded-lg">
+      <div className="h-[300px]  bg-gradient-to-tr from-gray-900 to-green-50 rounded-lg relative">
         <img
           className="object-cover w-full h-full rounded-lg mix-blend-overlay"
           src={img}
           alt=""
         />
+        <div className="absolute inset-0 mt-8">
+          <h2
+            style={{ width: "fit-content" }}
+            className={`text-white text-sm transition px-2 cursor-pointer ${
+              quantity < 1 ? `bg-red-500` : `bg-yellow-500`
+            } rounded-r-md font-bold`}
+          >
+            {quantity < 1 ? `Out of stock` : `In stock`}
+          </h2>
+        </div>
       </div>
       <div className="rounded-lg space-y-3 ">
         <div className="flex justify-between items-center">
-          <h1 className="text-xl font-semibold">{title}</h1>
-          <p className="opacity-60 text-xl">{category}</p>
+          <h1 className=" font-semibold">{title}</h1>
+          <p className="opacity-60">{category}</p>
         </div>
         <div className="flex justify-between text-sm">
           <div className="opacity-60 space-y-3">
-            <p>Cost Price: {costPrice}</p>
-            <p>Selling Price: {sellingPrice}</p>
+            <p>Cost Price: Tk {costPrice}</p>
+            <p>Selling Price: Tk {sellingPrice}</p>
           </div>
-          <div className="space-y-3">
-            <p> {quantity} pcs</p>
+          <div className="space-y-3 ">
+            <p className="text-right"> {quantity} pcs</p>
             <p>
               <button
-                className="px-2 py-1 border border-gray-800 rounded-bl-[15%] text-black rounded-sm "
+                className="px-8 py-1 border border-gray-800 rounded-bl-[15%] text-black rounded-sm "
                 onClick={() => handleSold(product)}
               >
                 Mark Sold
@@ -107,20 +122,20 @@ const Product = ({ product }) => {
             </p>
           </div>
         </div>
-
+        <hr />
         <div className="flex justify-between pt-2">
           <Link
             key={_id}
             to={`/updateProduct/${_id}`}
             state={{ productData: product }}
           >
-            <button className="px-2 py-1 bg-gray-800 rounded-bl-[15%] text-white rounded-sm ">
+            <button className="px-8 py-1 border-2 border-gray-800  rounded-sm ">
               Update
             </button>
           </Link>
           <button
             onClick={() => handleDelete(_id)}
-            className="px-2 py-1 bg-gray-800 rounded-bl-[15%] text-red-600 rounded-sm "
+            className="px-8 py-1 border-2 border-gray-800  text-red-600 rounded-sm "
           >
             Delete
           </button>

@@ -5,14 +5,15 @@ import { useGetSalesQuery } from "../redux/api/apiSlice";
 import Header from "../components/Header";
 
 const Daily = () => {
-  const [startDate, setStartDate] = useState(new Date("2021-02-01"));
-  const [endDate, setEndDate] = useState(new Date("2021-03-01"));
+  const [startDate, setStartDate] = useState(new Date("2023-02-01"));
+  const [endDate, setEndDate] = useState(new Date("2023-12-01"));
   const { data } = useGetSalesQuery();
 
   const [formattedData] = useMemo(() => {
     if (!data) return [];
 
     const { dailyData } = data;
+
     const totalSalesLine = {
       id: "totalSales",
       color: "hsl(154, 70%, 50%)",
@@ -104,7 +105,7 @@ const Daily = () => {
               tickSize: 5,
               tickPadding: 5,
               tickRotation: 90,
-              legend: "Month",
+              legend: "Day",
               legendOffset: 60,
               legendPosition: "middle",
             }}

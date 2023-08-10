@@ -120,7 +120,7 @@ const Monthly = () => {
             useMesh={true}
             legends={[
               {
-                anchor: "top-right",
+                anchor: "center-right",
                 direction: "column",
                 justify: false,
                 translateX: 50,

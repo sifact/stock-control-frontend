@@ -18,12 +18,17 @@ const Overview = () => {
       />
       <div className="h-[75vh]">
         <select
+          className="p-2 rounded-sm "
           value={view}
           label="View"
           onChange={(e) => setView(e.target.value)}
         >
-          <option value="sales">Sales</option>
-          <option value="units">Units</option>
+          <option className="p-2 rounded-sm" value="sales">
+            Sales
+          </option>
+          <option className="p-2 rounded-sm" value="units">
+            Units
+          </option>
           {/* <MenuItem value="sales">Sales</MenuItem>
             <MenuItem value="units">Units</MenuItem> */}
         </select>
